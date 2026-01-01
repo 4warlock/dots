@@ -1,0 +1,121 @@
+# Logo key. Use Mod1 for Alt.
+set $mod Mod1
+# Home row direction keys, like vim
+set $left h
+set $down j
+set $up k
+set $right l
+# Your preferred terminal emulator
+set $term kitty
+
+set $menu wofi --show drun
+include /etc/sway/config-vars.d/*
+
+# backgrounds
+output * bg /usr/share/backgrounds/sway/nasa.png fill
+
+## misc
+exec_always autotiling
+default_border pixel 2
+default_floating_border pixel 2
+gaps inner 4
+gaps outer 2
+
+### Key bindings
+#
+# Basics:
+#
+    # Start a terminal
+    bindsym $mod+Return exec $term
+    bindsym $mod+e exec brave
+    bindsym $mod+r exec obsidian
+    bindsym $mod+Shift+o exec ~/.config/sway/screenshot.sh
+
+    #lock the screen with black background
+    bindsym $mod+Shift+p exec swaylock -c 000000
+
+    # Kill focused window
+    bindsym $mod+q kill
+    bindsym $mod+Space exec $menu
+
+    # Reload the configuration file
+    bindsym $mod+Shift+c reload
+
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+   
+    #Standard keyboard setting
+    input * {
+        xkb_layout "se, us"
+        xkb_options "grp:win_space_toggle"
+      }
+
+#
+# Moving around:
+#
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+#
+# Workspaces:
+#
+    # Switch to workspace
+    bindsym $mod+a workspace number 1
+    bindsym $mod+s workspace number 2
+    bindsym $mod+d workspace number 3
+    bindsym $mod+f workspace number 4
+    bindsym $mod+g workspace number 5
+    # Move focused container to workspace
+    bindsym $mod+Shift+a move container to workspace number 1
+    bindsym $mod+Shift+s move container to workspace number 2
+    bindsym $mod+Shift+d move container to workspace number 3
+    bindsym $mod+Shift+f move container to workspace number 4
+    bindsym $mod+Shift+g move container to workspace number 5
+    # Note: workspaces can have any name you want, not just numbers.
+
+    # Make the current focus fullscreen
+    bindsym $mod+v fullscreen
+
+# Resizing containers:
+mode "resize" {
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+p mode "resize"
+
+# Status Bar:
+bar {
+    position top
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    status_command while date +'%Y-%m-%d %X'; do sleep 1; done
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
+
+include /etc/sway/config.d/*
