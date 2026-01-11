@@ -37,7 +37,7 @@ vim.o.confirm = true
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
 -- Diagnostic keymaps
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+vim.keymap.set('n', '<leader>x', vim.diagnostic.setloclist, { desc = 'Open diagnostic [X]uickfix list' })
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 --  See `:help wincmd` for a list of all window commands
 vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
@@ -47,6 +47,10 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 
 -- Tmux sessionizer test
 vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>')
+
+-- Save and quit test
+vim.keymap.set('n', '<leader>w', '<cmd>w<CR>', { desc = '[W]rite (save) file' })
+vim.keymap.set('n', '<leader>q', '<cmd>q<CR>', { desc = '[Q]uit window' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -577,14 +581,34 @@ require('lazy').setup {
     },
   },
 
-  -- Harpoon (quick file navigation)
-  {
+  --harpoon quickfile navigation
+ {
     'ThePrimeagen/harpoon',
     branch = 'harpoon2',
     dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
       local harpoon = require 'harpoon'
       harpoon:setup()
+      --
+      -- Harpoon keymaps
+      vim.keymap.set("n", "<leader>a", function()
+        harpoon:list():add()
+      end, { desc = "Harpoon add file" })
+      vim.keymap.set("n", "<leader>e", function()
+        harpoon.ui:toggle_quick_menu(harpoon:list())
+      end, { desc = "Harpoon menu" })
+      vim.keymap.set("n", "<leader>1", function()
+        harpoon:list():select(1)
+      end, { desc = "Harpoon file 1" })
+      vim.keymap.set("n", "<leader>2", function()
+        harpoon:list():select(2)
+      end, { desc = "Harpoon file 2" })
+      vim.keymap.set("n", "<leader>3", function()
+        harpoon:list():select(3)
+      end, { desc = "Harpoon file 3" })
+      vim.keymap.set("n", "<leader>4", function()
+        harpoon:list():select(4)
+      end, { desc = "Harpoon file 4" })
     end,
   },
 }
