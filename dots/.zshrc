@@ -28,6 +28,17 @@ alias tkill='tmux kill-server'
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias sus='systemctl suspend'
+alias u='cat $HOME/unicorn.txt'
+alias k='cat $HOME/heart.txt'
 
+#bindkey -s '^F' 'tmux-sessionizer\n'
+bindkey '^y' autosuggest-accept
+
+# Fuzzy finder for all directories
 bindkey -s '^F' 'tmux-sessionizer\n'
-bindkey '^l' autosuggest-accept
+# Quick jumps to specific directories
+bindkey -s '\ej' "tmux-sessionizer $HOME/java\n"
+bindkey -s '\ek' "tmux-sessionizer $HOME/python\n"
+bindkey -s '\el' "tmux-sessionizer $HOME/notes/econ\n"
+bindkey -s '\eh' "tmux-sessionizer $HOME/elixir\n"
+bindkey -s '\ec' "tmux-sessionizer $HOME/.config\n"
