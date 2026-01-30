@@ -39,14 +39,16 @@ vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>x', vim.diagnostic.setloclist, { desc = 'Open diagnostic [X]uickfix list' })
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
---  See `:help wincmd` for a list of all window commands
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Tmux sessionizer test
 vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>')
+
+-- Quick jumps to specific directories
+vim.keymap.set('n', '<M-j>', '<cmd>silent !tmux-sessionizer $HOME/java<CR><CR>')
+vim.keymap.set('n', '<M-k>', '<cmd>silent !tmux-sessionizer $HOME/python<CR><CR>')
+vim.keymap.set('n', '<M-l>', '<cmd>silent !tmux-sessionizer $HOME/notes/econ<CR><CR>')
+vim.keymap.set('n', '<M-h>', '<cmd>silent !tmux-sessionizer $HOME/elixir<CR><CR>')
+vim.keymap.set('n', '<M-c>', '<cmd>silent !tmux-sessionizer $HOME/.config<CR><CR>')
 
 -- Save and quit test
 vim.keymap.set('n', '<leader>w', '<cmd>w<CR>', { desc = '[W]rite (save) file' })
@@ -96,54 +98,6 @@ require('lazy').setup {
       },
     },
   },
-
-  { -- Useful plugin to show you pending keybinds.
-    'folke/which-key.nvim',
-    event = 'VimEnter', -- Sets the loading event to 'VimEnter'
-    opts = {
-      delay = 300,
-      icons = {
-        mappings = vim.g.have_nerd_font,
-        keys = vim.g.have_nerd_font and {} or {
-          Up = '<Up> ',
-          Down = '<Down> ',
-          Left = '<Left> ',
-          Right = '<Right> ',
-          C = '<C-…> ',
-          M = '<M-…> ',
-          D = '<D-…> ',
-          S = '<S-…> ',
-          CR = '<CR> ',
-          Esc = '<Esc> ',
-          ScrollWheelDown = '<ScrollWheelDown> ',
-          ScrollWheelUp = '<ScrollWheelUp> ',
-          NL = '<NL> ',
-          BS = '<BS> ',
-          Space = '<Space> ',
-          Tab = '<Tab> ',
-          F1 = '<F1>',
-          F2 = '<F2>',
-          F3 = '<F3>',
-          F4 = '<F4>',
-          F5 = '<F5>',
-          F6 = '<F6>',
-          F7 = '<F7>',
-          F8 = '<F8>',
-          F9 = '<F9>',
-          F10 = '<F10>',
-          F11 = '<F11>',
-          F12 = '<F12>',
-        },
-      },
-
-      -- Document existing key chains
-      spec = {
-        { '<leader>s', group = '[S]earch' },
-        { '<leader>t', group = '[T]oggle' },
-        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
-      },
-    },
-  },
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
@@ -177,7 +131,7 @@ require('lazy').setup {
       local builtin = require 'telescope.builtin'
       vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
       vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-      vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+      vim.keymap.set('n', '<leader>"  "', builtin.find_files, { desc = '[S]earch [F]iles' })
       vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
       vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
       vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
@@ -582,7 +536,7 @@ require('lazy').setup {
   },
 
   --harpoon quickfile navigation
- {
+  {
     'ThePrimeagen/harpoon',
     branch = 'harpoon2',
     dependencies = { 'nvim-lua/plenary.nvim' },
@@ -591,24 +545,24 @@ require('lazy').setup {
       harpoon:setup()
       --
       -- Harpoon keymaps
-      vim.keymap.set("n", "<leader>a", function()
+      vim.keymap.set('n', '<leader>a', function()
         harpoon:list():add()
-      end, { desc = "Harpoon add file" })
-      vim.keymap.set("n", "<leader>e", function()
+      end, { desc = 'Harpoon add file' })
+      vim.keymap.set('n', '<leader>e', function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
-      end, { desc = "Harpoon menu" })
-      vim.keymap.set("n", "<leader>1", function()
+      end, { desc = 'Harpoon menu' })
+      vim.keymap.set('n', '<M-1>', function()
         harpoon:list():select(1)
-      end, { desc = "Harpoon file 1" })
-      vim.keymap.set("n", "<leader>2", function()
+      end, { desc = 'Harpoon file 1' })
+      vim.keymap.set('n', '<M-2>', function()
         harpoon:list():select(2)
-      end, { desc = "Harpoon file 2" })
-      vim.keymap.set("n", "<leader>3", function()
+      end, { desc = 'Harpoon file 2' })
+      vim.keymap.set('n', '<M-3>', function()
         harpoon:list():select(3)
-      end, { desc = "Harpoon file 3" })
-      vim.keymap.set("n", "<leader>4", function()
+      end, { desc = 'Harpoon file 3' })
+      vim.keymap.set('n', '<M-4>', function()
         harpoon:list():select(4)
-      end, { desc = "Harpoon file 4" })
+      end, { desc = 'Harpoon file 4' })
     end,
   },
 }
