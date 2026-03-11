@@ -39,6 +39,6 @@ bindkey -s '^F' 'tmux-sessionizer\n'
 # Quick jumps to specific directories
 bindkey -s '\ej' "tmux-sessionizer $HOME/java\n"
 bindkey -s '\ek' "tmux-sessionizer $HOME/python\n"
-bindkey -s '\el' "tmux-sessionizer $HOME/notes/econ\n"
+bindkey -s '\el' "tmux-sessionizer $HOME/notes/fysik/\n"
 bindkey -s '\eh' "tmux-sessionizer $HOME/elixir\n"
 bindkey -s '\ec' "tmux-sessionizer $HOME/.config\n"
