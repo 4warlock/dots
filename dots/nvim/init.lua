@@ -46,7 +46,7 @@ vim.keymap.set('n', '<C-f>', '<cmd>silent !tmux neww tmux-sessionizer<CR>')
 -- Quick jumps to specific directories
 vim.keymap.set('n', '<M-j>', '<cmd>silent !tmux-sessionizer $HOME/java<CR><CR>')
 vim.keymap.set('n', '<M-k>', '<cmd>silent !tmux-sessionizer $HOME/python<CR><CR>')
-vim.keymap.set('n', '<M-l>', '<cmd>silent !tmux-sessionizer $HOME/notes/econ<CR><CR>')
+vim.keymap.set('n', '<M-l>', '<cmd>silent !tmux-sessionizer $HOME/notes/fysik/<CR><CR>')
 vim.keymap.set('n', '<M-h>', '<cmd>silent !tmux-sessionizer $HOME/elixir<CR><CR>')
 vim.keymap.set('n', '<M-c>', '<cmd>silent !tmux-sessionizer $HOME/.config<CR><CR>')
 
@@ -315,8 +315,8 @@ require('lazy').setup {
       local servers = {
         -- clangd = {},
         -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
+        pyright = {},
+        rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
 
