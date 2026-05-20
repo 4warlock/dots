@@ -1,28 +1,16 @@
-# Load syntax highlighting (must be at end)
-source ~/.zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+stty -ixon
+#PS1='%F{red}%~%f $ '
+# For ~/ Base and normal pathname 
+_prompt_path() {
+  [ "$PWD" = "$HOME" ] && echo "~ base" || echo "${PWD/#$HOME/~}"
+}
+setopt PROMPT_SUBST
+PROMPT='%F{red}$(_prompt_path)%f $ '
+# Ends here
 
-# Load autosuggestions
-source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# Better completion settings
-autoload -Uz compinit && compinit
-
-# Case-insensitive completion
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-
-# Colored completion
-zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-
-# Menu selection
-zstyle ':completion:*' menu select
-
-# Partial completion suggestions
-zstyle ':completion:*' list-suffixes
-zstyle ':completion:*' expand prefix suffix
-
-PS1='%F{red}%~%f $ '
 export EDITOR=nvim
 export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PATH:$(npm config get prefix)/bin"
 
 alias tkill='tmux kill-server'
 alias ls='ls --color=auto'
@@ -39,6 +27,6 @@ bindkey -s '^F' 'tmux-sessionizer\n'
 # Quick jumps to specific directories
 bindkey -s '\ej' "tmux-sessionizer $HOME/java\n"
 bindkey -s '\ek' "tmux-sessionizer $HOME/python\n"
-bindkey -s '\el' "tmux-sessionizer $HOME/notes/fysik/\n"
-bindkey -s '\eh' "tmux-sessionizer $HOME/elixir\n"
+bindkey -s '\el' "tmux-sessionizer $HOME/notes\n"
 bindkey -s '\ec' "tmux-sessionizer $HOME/.config\n"
+bindkey -s '\eh' "tmux-sessionizer $HOME\n"
