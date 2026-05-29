@@ -1,0 +1,38 @@
+let mapleader=" "
+
+nnoremap <leader>sf :action GotoFile<CR>
+nnoremap <leader>cf :action CloseContent<CR>
+nnoremap <leader>sa :action SearchEverywhere<CR>
+nnoremap <leader>zm :action ToggleZenMode<CR>
+nnoremap <leader>ca :action ShowIntentionActions<CR>
+nnoremap <leader>sh :action QuickJavaDoc<CR>
+nnoremap <leader>ne :action GotoNextError<CR>
+nnoremap <leader>pe :action GotoPreviousError<CR>
+nnoremap <leader>rn :action RenameElement<CR>
+nnoremap <leader>tt :action ActivateTerminalToolWindow<CR>
+nnoremap <leader>ha :action HideAllWindows<CR>
+nnoremap <leader>nj :action NewClass<CR>
+nnoremap <leader>np :action NewProject<CR>
+nnoremap <leader>cp :action ManageRecentProjects<CR>
+nnoremap <leader>1 :action GoToTab1<CR>
+nnoremap <leader>2 :action GoToTab2<CR>
+nnoremap <leader>3 :action GoToTab3<CR>
+nnoremap <leader>4 :action GoToTab4<CR>
+nnoremap <leader>5 :action GoToTab5<CR>
+nnoremap <leader>6 :action GoToTab6<CR>
+nnoremap <leader>7 :action GoToTab7<CR>
+nnoremap <leader>8 :action GoToTab8<CR>
+nnoremap <leader>9 :action GoToTab9<CR>
+nnoremap <leader>ff :action ReformatCode<CR>
+
+set clipboard+=unnamed
+set number
+set relativenumber
+set scrolloff=10
+set cursorline
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+
+Plug 'machakann/vim-highlightedyank'
