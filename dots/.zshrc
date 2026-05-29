@@ -21,3 +21,4 @@ alias cz='nvim ~/.zshrc'
 alias sz='source ~/.zshrc'
 
 bindkey '^y' autosuggest-accept
+bindkey -s '^F' 'tmux-sessionizer\n'
