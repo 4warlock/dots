@@ -41,6 +41,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.keymap.set("n", "<leader>w", "<cmd>w<CR>")
 vim.keymap.set("n", "<leader>q", "<cmd>q<CR>")
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("n", "<leader>j", "J", { desc = "Join lines" })
+vim.keymap.set("n", "H", "^")
+vim.keymap.set("n", "L", "$")
+vim.keymap.set("n", "J", "<C-d>")
+vim.keymap.set("n", "K", "<C-u>")
 
 require("lazy").setup({
 	{
