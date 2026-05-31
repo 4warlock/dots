@@ -24,6 +24,11 @@ nnoremap <leader>7 :action GoToTab7<CR>
 nnoremap <leader>8 :action GoToTab8<CR>
 nnoremap <leader>9 :action GoToTab9<CR>
 nnoremap <leader>ff :action ReformatCode<CR>
+nnoremap H ^
+nnoremap L $
+nnoremap J <C-d>
+nnoremap K <C-u>
+nnoremap <leader>j J
 
 set clipboard+=unnamed
 set number
