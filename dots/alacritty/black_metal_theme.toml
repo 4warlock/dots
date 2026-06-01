@@ -1,0 +1,38 @@
+# Black Metal theme for Alacritty
+# Source: base16-black-metal by metalelf0 (https://github.com/metalelf0/base16-black-metal-scheme)
+# Ported from the kitty Black Metal theme
+
+[colors]
+draw_bold_text_with_bright_colors = true
+
+[colors.primary]
+background = "#000000"   # base00
+foreground = "#c1c1c1"   # base05
+
+[colors.cursor]
+text   = "#000000"       # base00
+cursor = "#c1c1c1"       # base05
+
+[colors.selection]
+background = "#333333"   # base03
+foreground = "#c1c1c1"   # base05
+
+[colors.normal]
+black   = "#000000"      # base00
+red     = "#5f8787"      # base08
+green   = "#dd9999"      # base0B
+yellow  = "#a06666"      # base0A
+blue    = "#888888"      # base0D
+magenta = "#999999"      # base0E
+cyan    = "#aaaaaa"      # base0C
+white   = "#c1c1c1"      # base05
+
+[colors.bright]
+black   = "#222222"      # base02
+red     = "#5f8787"      # base08
+green   = "#dd9999"      # base0B
+yellow  = "#a06666"      # base0A
+blue    = "#888888"      # base0D
+magenta = "#999999"      # base0E
+cyan    = "#aaaaaa"      # base0C
+white   = "#c1c1c1"      # base07
