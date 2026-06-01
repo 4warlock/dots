@@ -1,2 +1,2 @@
-# dots
-Does ssh finally work?
+# Just my dotfiles, nothing special
+
