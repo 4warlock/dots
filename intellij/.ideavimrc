@@ -30,7 +30,7 @@ nnoremap J <C-d>
 nnoremap K <C-u>
 nnoremap <leader>j J
 
-set clipboard+=unnamed
+set clipboard+=unnamedplus
 set number
 set relativenumber
 set scrolloff=10
