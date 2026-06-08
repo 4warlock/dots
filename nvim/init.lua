@@ -23,7 +23,6 @@ vim.o.smartcase = true
 vim.o.signcolumn = "yes"
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
-vim.o.cursorline = true
 vim.o.scrolloff = 10
 vim.o.confirm = true
 vim.o.tabstop = 4
@@ -48,34 +47,13 @@ vim.keymap.set("n", "J", "<C-d>")
 vim.keymap.set("n", "K", "<C-u>")
 
 require("lazy").setup({
-	{
-		"RRethy/base16-nvim",
-		priority = 1000,
-		config = function()
-			require("base16-colorscheme").setup({
-				base00 = "#000000",
-				base01 = "#121212",
-				base02 = "#222222",
-				base03 = "#333333",
-				base04 = "#999999",
-				base05 = "#c1c1c1",
-				base06 = "#999999",
-				base07 = "#c1c1c1",
-				base08 = "#5f8787",
-				base09 = "#aaaaaa",
-				base0A = "#a06666",
-				base0B = "#dd9999",
-				base0C = "#aaaaaa",
-				base0D = "#888888",
-				base0E = "#999999",
-				base0F = "#444444",
-			})
-			-- Transparency
-			vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
-			vim.api.nvim_set_hl(0, "NormalFloat", { bg = "NONE" })
-			vim.api.nvim_set_hl(0, "SignColumn", { bg = "NONE" })
-		end,
-	},
+ {
+	"rose-pine/neovim",
+	name = "rose-pine",
+	config = function()
+		vim.cmd("colorscheme rose-pine")
+	end
+},
 	{
 		"mbbill/undotree",
 		config = function()
@@ -117,24 +95,6 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>4", function()
 				harpoon:list():select(4)
 			end)
-		end,
-	},
-	{
-		"stevearc/oil.nvim",
-		dependencies = { "nvim-tree/nvim-web-devicons" },
-		config = function()
-			require("oil").setup({
-				float = {
-					padding = 2,
-					max_width = 65,
-					max_height = 25,
-					border = "rounded",
-					win_options = {
-						winblend = 0,
-					},
-				},
-			})
-			vim.keymap.set("n", "<leader>o", "<cmd>lua require('oil').toggle_float()<CR>", { desc = "[O]pen Oil" })
 		end,
 	},
 	{
