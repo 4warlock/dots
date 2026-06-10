@@ -3,6 +3,9 @@ font-family = "FiraCode Nerd Font"
 font-size = 22
 
 # Background / opacity
-background-opacity = 0.90
+#background-opacity = 0.90
 
-theme = Rose Pine
+# Ligatures
+font-feature = "liga=1"
+#
+theme = Vague

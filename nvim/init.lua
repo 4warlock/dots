@@ -47,13 +47,14 @@ vim.keymap.set("n", "J", "<C-d>")
 vim.keymap.set("n", "K", "<C-u>")
 
 require("lazy").setup({
- {
-	"rose-pine/neovim",
-	name = "rose-pine",
-	config = function()
-		vim.cmd("colorscheme rose-pine")
-	end
-},
+	{
+		"vague2k/vague.nvim",
+		priority = 1000,
+		config = function()
+			require("vague").setup()
+			vim.cmd.colorscheme("vague")
+		end,
+	},
 	{
 		"mbbill/undotree",
 		config = function()
