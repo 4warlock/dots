@@ -1,17 +1,14 @@
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-
-if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable",
-		lazypath,
-	})
-end
-
-vim.opt.rtp:prepend(lazypath)
+vim.pack.add {
+	'https://github.com/vague-theme/vague.nvim',
+	{ src = 'https://github.com/nvim-lua/plenary.nvim' },
+	{ src = 'https://github.com/nvim-telescope/telescope.nvim' },
+	{
+		src = 'https://github.com/ThePrimeagen/harpoon',
+		version = 'harpoon2',
+	},
+	{ src = 'https://github.com/neovim/nvim-lspconfig' },
+	{ src = "https://github.com/mbbill/undotree" },
+}
 
 vim.g.mapleader = " "
 vim.o.number = true
@@ -20,10 +17,10 @@ vim.o.undofile = true
 vim.o.breakindent = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
-vim.o.signcolumn = "yes"
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 vim.o.scrolloff = 10
+vim.o.signcolumn = "yes"
 vim.o.confirm = true
 vim.o.tabstop = 4
 
@@ -40,206 +37,90 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.keymap.set("n", "<leader>w", "<cmd>w<CR>")
 vim.keymap.set("n", "<leader>q", "<cmd>q<CR>")
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
-vim.keymap.set("n", "<leader>j", "J", { desc = "Join lines" })
+vim.keymap.set("n", "<leader>j", "J")
 vim.keymap.set("n", "H", "^")
 vim.keymap.set("n", "L", "$")
 vim.keymap.set("n", "J", "<C-d>")
 vim.keymap.set("n", "K", "<C-u>")
+vim.keymap.set("n", "X", "d^")
 
-require("lazy").setup({
-	{
-		"vague2k/vague.nvim",
-		priority = 1000,
-		config = function()
-			require("vague").setup()
-			vim.cmd.colorscheme("vague")
-		end,
+vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle, {
+    desc = "Toggle UndoTree",
+})
+
+vim.cmd.colorscheme('vague')
+
+local telescope = require("telescope")
+local builtin = require("telescope.builtin")
+
+telescope.setup({
+	defaults = {
+		layout_strategy = "horizontal",
+		sorting_strategy = "ascending",
 	},
-	{
-		"mbbill/undotree",
-		config = function()
-			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
-		end,
-	},
-	{ "tpope/vim-fugitive" },
-	{
-		"ThePrimeagen/harpoon",
-		branch = "harpoon2",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		config = function()
-			local harpoon = require("harpoon")
+})
 
-			harpoon:setup()
+vim.keymap.set("n", "<leader>sf", builtin.find_files, {
+})
 
-			vim.keymap.set("n", "<leader>a", function()
-				harpoon:list():add()
-			end, { desc = "Harpoon add file" })
+vim.keymap.set("n", "<leader>sp", builtin.live_grep, {
+})
 
-			vim.keymap.set("n", "<leader>e", function()
-				harpoon.ui:toggle_quick_menu(harpoon:list())
-			end, { desc = "Harpoon menu" })
+vim.keymap.set("n", "<leader>sb", builtin.buffers, {
+})
 
-			vim.keymap.set("n", "<leader>1", function()
-				harpoon:list():select(1)
-			end)
+vim.keymap.set("n", "<leader>th", builtin.help_tags, {
+})
 
-			vim.keymap.set("n", "<leader>2", function()
-				harpoon:list():select(2)
-			end)
+local harpoon = require("harpoon")
 
-			vim.keymap.set("n", "<leader>3", function()
-				harpoon:list():select(3)
-			end)
+harpoon:setup()
 
-			vim.keymap.set("n", "<leader>4", function()
-				harpoon:list():select(4)
-			end)
-		end,
-	},
-	{
-		"nvim-telescope/telescope.nvim",
-		branch = "0.1.x",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			{
-				"nvim-telescope/telescope-fzf-native.nvim",
-				build = "make",
-			},
-		},
-		config = function()
-			local telescope = require("telescope")
-			local builtin = require("telescope.builtin")
-			telescope.setup({
-				defaults = {
-					layout_strategy = "horizontal",
-					sorting_strategy = "ascending",
-				},
-			})
-			pcall(function()
-				telescope.load_extension("fzf")
-			end)
-			vim.keymap.set("n", "<leader>sf", builtin.find_files, {
-				desc = "Project files",
-			})
-			vim.keymap.set("n", "<leader>sp", builtin.live_grep, {
-				desc = "Search project",
-			})
-			vim.keymap.set("n", "<leader>sb", builtin.buffers, {
-				desc = "Buffers",
-			})
-			vim.keymap.set("n", "<leader>sh", builtin.help_tags, {
-				desc = "Help",
-			})
-		end,
-	},
-	{
-		"hrsh7th/nvim-cmp",
-		dependencies = {
-			"hrsh7th/cmp-nvim-lsp",
-		},
-		config = function()
-			local cmp = require("cmp")
-			cmp.setup({
-				mapping = cmp.mapping.preset.insert({
-					["<C-Space>"] = cmp.mapping.complete(),
-					["<CR>"] = cmp.mapping.confirm({ select = true }),
-				}),
-				sources = {
-					{ name = "nvim_lsp" },
-				},
-			})
-		end,
-	},
-	{
-		"williamboman/mason.nvim",
-		build = ":MasonUpdate",
-		config = function()
-			require("mason").setup()
-		end,
-	},
-	{
-		"williamboman/mason-lspconfig.nvim",
-		dependencies = {
-			"williamboman/mason.nvim",
-			"neovim/nvim-lspconfig",
-			"hrsh7th/cmp-nvim-lsp",
-		},
-		config = function()
-			local capabilities = require("cmp_nvim_lsp").default_capabilities()
+vim.keymap.set("n", "<leader>a", function()
+	harpoon:list():add()
+end, { desc = "Harpoon add file" })
 
-			require("mason-lspconfig").setup({
-				ensure_installed = {
-					"basedpyright",
-					"ruff",
-					"lua_ls",
-					"rust_analyzer",
-				},
-			})
-			vim.lsp.config("basedpyright", {
-				capabilities = capabilities,
-				settings = {
-					basedpyright = {
-						analysis = {
-							typeCheckingMode = "standard",
-						},
-					},
-				},
-			})
-			vim.lsp.config("ruff", {
-				capabilities = capabilities,
-			})
-			vim.lsp.config("lua_ls", {
-				capabilities = capabilities,
-				settings = {
-					Lua = {
-						runtime = {
-							version = "LuaJIT",
-						},
-						diagnostics = {
-							globals = { "vim" },
-						},
-						workspace = {
-							library = vim.api.nvim_get_runtime_file("", true),
-							checkThirdParty = false,
-						},
-						telemetry = {
-							enable = false,
-						},
-					},
-				},
-			})
-			vim.lsp.config("rust_analyzer", {
-				capabilities = capabilities,
-				settings = {
-					["rust-analyzer"] = {
-						checkOnSave = {
-							command = "clippy",
-						},
-					},
-				},
-			})
-			vim.api.nvim_create_autocmd("LspAttach", {
-				callback = function(ev)
-					local client = vim.lsp.get_client_by_id(ev.data.client_id)
-					if client and client.name == "ruff" then
-						client.server_capabilities.hoverProvider = false
-					end
-					local opts = { buffer = ev.buf }
-					vim.keymap.set("n", "<leader>sd", vim.diagnostic.open_float, { desc = "Show diagnostic" })
-					vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
-					vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
-					vim.keymap.set("n", "<leader>sh", vim.lsp.buf.hover, opts)
-					vim.keymap.set("n", "<leader>ff", function()
-						vim.lsp.buf.format({ async = true })
-					end)
-				end,
-			})
-			vim.lsp.enable("basedpyright")
-			vim.lsp.enable("ruff")
-			vim.lsp.enable("lua_ls")
-			vim.lsp.enable("rust_analyzer")
-		end,
-	},
+vim.keymap.set("n", "<leader>e", function()
+	harpoon.ui:toggle_quick_menu(harpoon:list())
+end, { desc = "Harpoon menu" })
+
+vim.keymap.set("n", "<leader>1", function()
+	harpoon:list():select(1)
+end, { desc = "Harpoon file 1" })
+
+vim.keymap.set("n", "<leader>2", function()
+	harpoon:list():select(2)
+end, { desc = "Harpoon file 2" })
+
+vim.keymap.set("n", "<leader>3", function()
+	harpoon:list():select(3)
+end, { desc = "Harpoon file 3" })
+
+vim.keymap.set("n", "<leader>4", function()
+	harpoon:list():select(4)
+end, { desc = "Harpoon file 4" })
+
+vim.keymap.set("n", "<leader>ff", function()
+	vim.lsp.buf.format({ async = true })
+end, { desc = "Format current file" })
+
+vim.lsp.enable('pyright')
+vim.lsp.enable('lua_ls')
+vim.lsp.enable('clangd')
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(ev)
+		local opts = { buffer = ev.buf }
+
+		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+		vim.keymap.set("n", "<leader>sh", vim.lsp.buf.hover, opts)
+		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+		vim.keymap.set("n", "<leader>cd", vim.diagnostic.open_float, opts)
+		vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, opts)
+		vim.keymap.set("n", "<leader>sr", vim.lsp.buf.references, opts)
+		vim.keymap.set("n", "<leader>ws", vim.lsp.buf.workspace_symbol, opts)
+		vim.keymap.set("i", "<C-h>", vim.lsp.buf.signature_help, opts)
+		vim.keymap.set("n", "<leader>nd", vim.diagnostic.goto_next, opts)
+		vim.keymap.set("n", "<leader>pd", vim.diagnostic.goto_prev, opts)
+	end,
 })
